@@ -44,7 +44,14 @@ ctags_plus.jump_to_tag = function(opts)
   if #arr_ == 1 then
     vim.cmd('tag ' .. word)
     return
-  end  
+  end
+  if #arr_ == 0 then
+    utils.notify("gnfisher.ctags_plus", {
+      msg = "No tags found.",
+      level = "ERROR",
+    })
+    return
+  end
   -- Get tag file
   local tagfiles = opts.ctags_file and { opts.ctags_file } or vim.fn.tagfiles()
   for i, ctags_file in ipairs(tagfiles) do
