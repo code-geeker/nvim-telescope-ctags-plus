@@ -39,6 +39,12 @@ ctags_plus.jump_to_tag = function(opts)
   opts.bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
   -- Get the word under the cursor presently
   local word = visual_or_cword()
+  local arr_ = vim.fn.taglist('^' .. word .. '$')
+  -- print(vim.inspect(arr_))
+  if #arr_ == 1 then
+    vim.cmd('tag ' .. word)
+    return
+  end  
   -- Get tag file
   local tagfiles = opts.ctags_file and { opts.ctags_file } or vim.fn.tagfiles()
   for i, ctags_file in ipairs(tagfiles) do
